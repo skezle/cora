@@ -1,6 +1,8 @@
 import torch
 import numpy as np
 import gym_minigrid  # Needed for Utils.make_env
+from gym_minigrid.wrappers import *
+
 import gym
 from continual_rl.experiments.tasks.task_base import TaskBase
 from continual_rl.experiments.tasks.preprocessor_base import PreprocessorBase
@@ -66,3 +68,25 @@ class MiniGridTask(TaskBase):
 
         super().__init__(task_id, action_space_id, preprocessor, preprocessor.env_spec, preprocessor.observation_space,
                          action_space, num_timesteps, eval_mode)
+
+def make_minigrid(
+    env_name,
+    env_seed=42,
+):
+    env = gym.make(env_name)
+    #env = RGBImgPartialObsWrapper(env)  # Get rid of the 'mission' field
+    #env = ImgObsWrapper(env)
+    print("Creating MiniGrid env with seed {}".format(env_seed))
+    env = ReseedWrapper(env, [env_seed])
+    return env
+
+
+def get_single_minigrid_task(task_id, action_space_id, env_name, num_timesteps, eval_mode=False, env_seed=42):
+    return MiniGridTask(
+        task_id=task_id,
+        action_space_id=action_space_id,
+        env_spec=lambda: make_minigrid(env_name, env_seed=env_seed),
+        num_timesteps=num_timesteps,
+        time_batch_size=1,  # no framestack
+        eval_mode=eval_mode,
+    )

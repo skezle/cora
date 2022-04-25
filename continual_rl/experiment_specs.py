@@ -1,8 +1,12 @@
+import os.path
+import json
+
 from continual_rl.experiments.experiment import Experiment
 from continual_rl.experiments.tasks.make_atari_task import get_single_atari_task
 from continual_rl.experiments.tasks.make_procgen_task import get_single_procgen_task
 from continual_rl.experiments.tasks.make_chores_task import create_chores_tasks_from_sequence
 from continual_rl.experiments.tasks.make_minihack_task import get_single_minihack_task
+from continual_rl.experiments.tasks.minigrid_task import get_single_minigrid_task
 from continual_rl.available_policies import LazyDict
 
 
@@ -131,6 +135,42 @@ def create_minihack_loader(
         )
     return loader
 
+
+def create_minigrid_loader(
+    task_prefix,
+    env_name_pairs,
+    num_timesteps=1e6,
+    task_params=None,
+    continual_testing_freq=1000,
+    cycle_count=1,
+    config='env_config.json',
+):
+    task_params = task_params if task_params is not None else {}
+
+    with open(os.path.join(os.path.dirname(__file__),
+                           '../configs/minigrid',
+                           config), 'r') as f:
+        params = json.load(f)
+        print(params)
+        env_seed = params['env_seed']
+
+    def loader():
+        tasks = []
+        for action_space_id, pairs in enumerate(env_name_pairs):
+            train_task = get_single_minigrid_task(f"{task_prefix}_{action_space_id}", action_space_id, pairs[0],
+                                                  num_timesteps, env_seed=env_seed, **task_params)
+            eval_task = get_single_minigrid_task(f"{task_prefix}_{action_space_id}_eval", action_space_id, pairs[1],
+                                                 0, eval_mode=True, env_seed=env_seed)
+
+            tasks += [train_task, eval_task]
+
+        return Experiment(
+            tasks,
+            continual_testing_freq=continual_testing_freq,
+            cycle_count=cycle_count,
+        )
+
+    return loader
 
 def get_available_experiments():
 
@@ -287,7 +327,26 @@ def get_available_experiments():
             ],
             num_timesteps=10e6,
             continual_testing_freq=1e6,
-            cycle_count=2,
+            cycle_count=1,
+        ),
+
+        # ===============================
+        # ============ MiniGrid =========
+        # ===============================
+        # the pairs of envs are (train_env, test_env)
+        # so in TB on the odd envs are the test envs which we
+        # can grab the episodic rewards to report.
+        "minigrid_1_cycles": create_minigrid_loader(
+            "minigrid_1_cycles",
+            [
+                ('MiniGrid-DoorKey-9x9-v0', 'MiniGrid-DoorKey-9x9-v0'),
+                ('MiniGrid-SimpleCrossingS9N1-v0', 'MiniGrid-SimpleCrossingS9N1-v0'),
+                ('MiniGrid-LavaCrossingS9N1-v0', 'MiniGrid-LavaCrossingS9N1-v0'),
+            ],
+            num_timesteps=7.5e6,
+            continual_testing_freq=5e5,
+            cycle_count=1,
+            config='env_config.json',
         ),
 
         # ===============================
