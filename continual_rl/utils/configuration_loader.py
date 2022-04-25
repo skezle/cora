@@ -181,7 +181,7 @@ class ConfigurationLoader(object):
 
         # Inflate the configuration from the raw json
         if next_experiment_id is not None:
-            experiment_json = experiments[next_experiment_id]
+            experiment_json = experiments[0] #experiments[next_experiment_id]
 
             # We don't create the experiment folder until we've verified everything is good to go, which we
             # don't know until after we've popped everything off the experiment json.
