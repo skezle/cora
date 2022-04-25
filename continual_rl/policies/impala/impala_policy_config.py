@@ -1,5 +1,7 @@
+import torch
 from continual_rl.policies.config_base import ConfigBase
 
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 class ImpalaPolicyConfig(ConfigBase):
     def __init__(self):
@@ -22,7 +24,7 @@ class ImpalaPolicyConfig(ConfigBase):
         self.momentum = 0  # RMSProp momentum
         self.epsilon = 0.01  # RMSProp epsilon
         self.grad_norm_clipping = 40.0
-        self.device = "cuda:0"
+        self.device = device
         self.disable_checkpoint = False
         self.comment = ""
         self.render_freq = 200000  # Timesteps between outputting a video to the tensorboard log
