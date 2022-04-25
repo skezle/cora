@@ -1,0 +1,15 @@
+[
+    {
+        "policy": "clear",
+        "experiment": "minigrid_1_cycles",
+        "epsilon": 0.01,
+        "num_actors": 12,
+        "batch_size": 10,
+        "unroll_length": 20,
+        "entropy_cost": 0.01,
+        "learning_rate": 4e-4,
+        "num_learner_threads": 2,
+        "large_file_path": "/tmp",
+        "replay_buffer_frames": 1e6
+    }
+]
