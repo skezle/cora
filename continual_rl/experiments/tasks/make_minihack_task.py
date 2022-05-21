@@ -15,6 +15,33 @@ class MiniHackObsWrapper(gym.ObservationWrapper):
         obs = np.pad(obs, [(2, 2), (2, 2), (0, 0)])
         return obs
 
+# link below dpesn't exist, this does though: https://github.com/facebookresearch/minihack/blob/main/minihack/scripts/venv_demo.py
+class VecEnv_Wrapper:
+    def __init__(self, env):
+        self.env = env
+
+    def step(self, action: int):
+        os.chdir(self.env.env._vardir)
+        return self.env.step(action)
+
+    def reset(self):
+        os.chdir(self.env.env._vardir)
+        return self.env.reset()
+
+    def close(self):
+        os.chdir(self.env.env._vardir)
+        self.env.close()
+
+    def seed(self, core=None, disp=None, reseed=False):
+        os.chdir(self.env.env._vardir)
+        self.env.seed(core, disp, reseed)
+
+    def __getattr__(self, name):
+        if name.startswith("_"):
+            raise AttributeError(
+                "attempted to get missing private attribute '{}'".format(name)
+            )
+        return getattr(self.env, name)
 
 # from https://github.com/MiniHackPlanet/MiniHack/blob/e9c8c20fb2449d1f87163314f9b3617cf4f0e088/minihack/scripts/venv_demo.py#L28
 class MiniHackMakeVecSafeWrapper(gym.Wrapper):
@@ -73,7 +100,8 @@ def make_minihack(
         savedir=savedir,
         **kwargs,
     )  # each env specifies its own self._max_episode_steps
-    env = MiniHackMakeVecSafeWrapper(env)
+    #env = MiniHackMakeVecSafeWrapper(env)
+    env = VecEnv_Wrapper(env)
     env = MiniHackObsWrapper(env)
     return env
 
