@@ -1,7 +1,7 @@
 [
     {
         "policy": "clear",
-        "experiment": "minihack_nav_paired_2_cycles",
+        "experiment": "minihack_nav_1_cycles",
         "discounting": 0.999,
         "epsilon": 0.000001,
         "num_actors": 64,

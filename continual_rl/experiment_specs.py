@@ -279,9 +279,9 @@ def get_available_experiments():
         # ============ Procgen ==========
         # ===============================
 
-        "procgen_6_tasks_5_cycles": create_procgen_sequence_loader(
+        "procgen_6_tasks_1_cycles": create_procgen_sequence_loader(
             # using same games as section 5.3 of https://openreview.net/pdf?id=Qun8fv4qSby
-            "procgen_6_tasks_5_cycles",
+            "procgen_6_tasks_1_cycles",
             ["climber-v0",
              "dodgeball-v0",
              "ninja-v0",
@@ -299,7 +299,7 @@ def get_available_experiments():
                 num_levels=0,  # full distribution
             ),
             continual_testing_freq=0.25e6,
-            cycle_count=5,
+            cycle_count=1,
         ),
 
         # ===============================

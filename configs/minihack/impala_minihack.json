@@ -1,7 +1,7 @@
 [
     {
         "policy": "impala",
-        "experiment": "minihack_nav_paired_1_cycles",
+        "experiment": "minihack_nav_1_cycles",
         "epsilon": 0.01,
         "num_actors": 64,
         "batch_size": 32,
