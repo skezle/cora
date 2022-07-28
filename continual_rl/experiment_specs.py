@@ -332,18 +332,27 @@ def get_available_experiments():
         "minihack_nav_1_cycles": create_minihack_loader(
             "minihack_nav_1_cycles",
             [
-                "Room-Random-5x5-v0",
-                "Room-Monster-5x5-v0",
-                "Room-Trap-5x5-v0",
-                # "Corridor-R2-v0",
-                # "KeyRoom-S5-v0",
+                "Room-Random-15x15-v0",  # |A|=8 consider replacing with "Room-Ultimate-5x5-v0",
+                "Room-Monster-15x15-v0",  # |A|=8
+                "Room-Trap-15x15-v0",  # |A|=8
+                "Room-Ultimate-15x15-v0",  # |A|=8
                 "River-Narrow-v0",
+                "River-v0",
                 "River-Monster-v0",
-                "CorridorBattle-v0",
-                "River-Lava-v0",
-                "River-MonsterLava-v0"
+                # "CorridorBattle-v0",
+                "HideNSeek-v0",
+                # "Room-Random-5x5-v0",
+                # "Room-Monster-5x5-v0",
+                # "Room-Trap-5x5-v0",
+                # # "Corridor-R2-v0",
+                # # "KeyRoom-S5-v0",
+                # "River-Narrow-v0",
+                # "River-Monster-v0",
+                # "CorridorBattle-v0",
+                # "River-Lava-v0",
+                # "River-MonsterLava-v0"
             ],
-            num_timesteps=7.5e6,
+            num_timesteps=1e6,
             continual_testing_freq=5e5,
             cycle_count=1,
         ),
