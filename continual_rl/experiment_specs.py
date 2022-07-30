@@ -352,8 +352,8 @@ def get_available_experiments():
                 # "River-Lava-v0",
                 # "River-MonsterLava-v0"
             ],
-            num_timesteps=1e6,
-            continual_testing_freq=1e5,
+            num_timesteps=1e7,
+            continual_testing_freq=5e5,
             cycle_count=1,
         ),
 
