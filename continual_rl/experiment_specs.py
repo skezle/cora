@@ -352,8 +352,25 @@ def get_available_experiments():
                 # "River-Lava-v0",
                 # "River-MonsterLava-v0"
             ],
-            num_timesteps=1e7,
-            continual_testing_freq=5e5,
+            num_timesteps=1e6,
+            continual_testing_freq=5e4,
+            cycle_count=1,
+        ),
+
+        "minihack_single": create_minihack_loader(
+            "minihack_single",
+            [
+                "Room-Random-15x15-v0",
+                #"Room-Monster-15x15-v0",
+                #"Room-Trap-15x15-v0",
+                #"Room-Ultimate-15x15-v0",
+                #"River-Narrow-v0",
+                #"River-v0",
+                #"River-Monster-v0",
+                #"HideNSeek-v0",
+            ],
+            num_timesteps=1e6,
+            continual_testing_freq=5e4,
             cycle_count=1,
         ),
 
