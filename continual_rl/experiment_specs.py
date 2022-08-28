@@ -393,7 +393,7 @@ def get_available_experiments():
             config='env_config.json',
         ),
 
-        "minigrid_single": create_minihack_loader(
+        "minigrid_single": create_minigrid_loader(
             "minihack_single",
             [
                 ('MiniGrid-DoorKey-9x9-v0', 'MiniGrid-DoorKey-9x9-v0'),
