@@ -393,6 +393,19 @@ def get_available_experiments():
             config='env_config.json',
         ),
 
+        "minigrid_single": create_minihack_loader(
+            "minihack_single",
+            [
+                ('MiniGrid-DoorKey-9x9-v0', 'MiniGrid-DoorKey-9x9-v0'),
+                #('MiniGrid-SimpleCrossingS9N1-v0', 'MiniGrid-SimpleCrossingS9N1-v0'),
+                #('MiniGrid-LavaCrossingS9N1-v0', 'MiniGrid-LavaCrossingS9N1-v0'),
+            ],
+            num_timesteps=7.5e5,
+            continual_testing_freq=1e4,
+            cycle_count=1,
+            config='env_config.json',
+        ),
+
         # ===============================
         # ============ CHORES ===========
         # ===============================
