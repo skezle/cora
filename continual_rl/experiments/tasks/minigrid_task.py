@@ -75,8 +75,7 @@ def make_minigrid(
 ):
     env = gym.make(env_name)
     #env = RGBImgPartialObsWrapper(env)  # Get rid of the 'mission' field
-    env = ImgObsWrapper(env)  # Get rid of the 'mission' field
-    #env = ImgObsWrapper(env)
+    #env = ImgObsWrapper(env)  # Get rid of the 'mission' field
     #print("Creating MiniGrid env with seed {}".format(env_seed))
     #env = ReseedWrapper(env, [env_seed])
     return env
