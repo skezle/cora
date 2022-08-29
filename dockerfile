@@ -36,3 +36,6 @@ RUN /root/miniconda3/envs/venv_cora/bin/python -m pip install -e .
 
 RUN /root/miniconda3/bin/conda install cmake
 RUN /root/miniconda3/envs/venv_cora/bin/python -m pip install minihack
+RUN cd gym-minigrid && \
+    pip install -e . && \
+    cd ..
