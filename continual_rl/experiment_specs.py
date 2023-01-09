@@ -357,6 +357,19 @@ def get_available_experiments():
             cycle_count=1,
         ),
 
+        "minihack_small": create_minihack_loader(
+            "minihack_small",
+            [
+                "Room-Random-15x15-v0",  # |A|=8 consider replacing with "Room-Ultimate-5x5-v0",
+                "Room-Trap-15x15-v0",  # |A|=8
+                "River-Narrow-v0",
+                "River-Monster-v0",
+            ],
+            num_timesteps=1e6,
+            continual_testing_freq=1e4,
+            cycle_count=1,
+        ),
+
         "minihack_single": create_minihack_loader(
             "minihack_single",
             [
