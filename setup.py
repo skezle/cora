@@ -9,7 +9,7 @@ setup(
     packages=find_packages(),
     py_modules=['continual_rl.available_policies', 'continual_rl.experiment_specs'],
     install_requires=['uuid',
-                      'numpy',
+                      'numpy==1.19.5',
                       'gym==0.18.0',
                       'protobuf==3.20',
                       'tensorboard',
