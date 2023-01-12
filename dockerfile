@@ -38,5 +38,7 @@ RUN /root/miniconda3/bin/conda install cmake
 RUN /root/miniconda3/envs/venv_cora/bin/python -m pip install nle==0.8.1
 RUN /root/miniconda3/envs/venv_cora/bin/python -m pip install minihack==0.1.3
 
+RUN /root/miniconda3/envs/venv_cora/bin/python -m pip install wandb
+
 WORKDIR /root/Git/cora/gym-minigrid
 RUN /root/miniconda3/envs/venv_cora/bin/python -m pip install -e .
