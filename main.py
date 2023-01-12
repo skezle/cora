@@ -15,14 +15,14 @@ if __name__ == "__main__":
         assert "cannot find context" in str(e)
         multiprocessing.set_start_method("spawn")
 
-    experiment, policy, args = ArgparseManager.parse(sys.argv[1:])
+    experiment, policy, resume_id = ArgparseManager.parse(sys.argv[1:])
 
     config_wandb = {
         "mode": "online",
         "project": "4task_baselines",
         "entity": "continual-dv2",
-        "name": args.name,
-        "group": args.group,
+        "name": "clear_cl_small_s" + str(resume_id),
+        "group": "minihack",
         "tags": None,
         "notes": None,
     }
