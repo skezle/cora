@@ -85,4 +85,4 @@ class ArgparseManager(object):
             experiment, policy = configuration_loader.load_next_experiment_from_dicts(args.output_dir,
                                                                                      [raw_experiment])
 
-        return experiment, policy
+        return experiment, policy, args
