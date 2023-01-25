@@ -383,7 +383,7 @@ def get_available_experiments():
                 #"HideNSeek-v0",
             ],
             num_timesteps=1e6,
-            continual_testing_freq=5e4,
+            continual_testing_freq=1e4,
             cycle_count=1,
         ),
 
