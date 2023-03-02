@@ -19,9 +19,9 @@ if __name__ == "__main__":
 
     config_wandb = {
         "mode": "online",
-        "project": "4task_baselines",
+        "project": "8task_baselines",
         "entity": "continual-dv2",
-        "name": "clear_cl_small_s" + str(resume_id),
+        "name": "clear_cl_s" + str(resume_id),
         "group": "minihack",
         "tags": None,
         "notes": None,
