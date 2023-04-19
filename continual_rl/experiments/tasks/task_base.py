@@ -79,17 +79,34 @@ class TaskBase(ABC):
         """
         Run the task as a "primary" task.
         """
-        return self._run(self._task_spec, run_id, policy, summary_writer, output_dir,
-                         timestep_log_offset, wait_to_report=False, log_with_task_timestep=True,
-                         reward_tag="train_reward", task_timestep_start=task_timestep_start)
+        return self._run(
+            self._task_spec,
+            run_id,
+            policy,
+            summary_writer,
+            output_dir,
+            timestep_log_offset,
+            wait_to_report=False,
+            log_with_task_timestep=True,
+            reward_tag="train_reward",
+            task_timestep_start=task_timestep_start,
+        )
 
     def continual_eval(self, run_id, policy, summary_writer, output_dir, timestep_log_offset=0):
         """
         Run the task as a "continual eval" task. In other words brief samples during the running of another task.
         """
-        return self._run(self._continual_eval_task_spec, run_id, policy, summary_writer, output_dir,
-                         timestep_log_offset, wait_to_report=True, log_with_task_timestep=False,
-                         reward_tag="eval_reward")
+        return self._run(
+            self._continual_eval_task_spec,
+            run_id,
+            policy,
+            summary_writer,
+            output_dir,
+            timestep_log_offset,
+            wait_to_report=True,
+            log_with_task_timestep=False,
+            reward_tag="eval_reward",
+        )
 
     def _complete_logs(self, run_id, collected_returns, output_dir, timestep, logs_to_report, summary_writer,
                        reward_tag):
@@ -112,14 +129,25 @@ class TaskBase(ABC):
             total_timesteps += task_timestep
         return total_timesteps
 
-    def _run(self, task_spec, run_id, policy, summary_writer, output_dir, timestep_log_offset, wait_to_report,
-             log_with_task_timestep, reward_tag, task_timestep_start=0):
+    def _run(
+        self, 
+        task_spec, 
+        run_id,
+        policy,
+        summary_writer,
+        output_dir,
+        timestep_log_offset,
+        wait_to_report,
+        log_with_task_timestep,
+        reward_tag,
+        task_timestep_start=0,
+    ):
         """
         Run a task according to its task spec.
         :param task_spec: Specifies how the task should be handled as it runs. E.g. the number of timesteps, or
         what preprocessor to use.
-        :param run_id: The identifier used to group results. All calls to run with the same run_id will be plotted as
-        one task.
+        :param run_id: The identifier used to group results. All
+             calls to run with the same run_id will be plotted as one task.
         :param policy: The policy used to run the task.
         :param summary_writer: Used to log tensorboard files.
         :param output_dir: The location to write logs to.

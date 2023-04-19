@@ -2,10 +2,12 @@ import os.path
 import json
 
 from continual_rl.experiments.experiment import Experiment
+from continual_rl.experiments.experiment_skillhack import ExperimentSkills
 #from continual_rl.experiments.tasks.make_atari_task import get_single_atari_task
 from continual_rl.experiments.tasks.make_procgen_task import get_single_procgen_task
 from continual_rl.experiments.tasks.make_chores_task import create_chores_tasks_from_sequence
 from continual_rl.experiments.tasks.make_minihack_task import get_single_minihack_task
+from continual_rl.experiments.tasks.make_skillhack_task import get_single_skillhack_task
 from continual_rl.experiments.tasks.minigrid_task import get_single_minigrid_task
 from continual_rl.available_policies import LazyDict
 
@@ -121,8 +123,13 @@ def create_minihack_loader(
     def loader():
         tasks = []
         for action_space_id, env_name in enumerate(env_names):
-            task = get_single_minihack_task(f"{task_prefix}_{action_space_id}", action_space_id, env_name,
-                                                  num_timesteps, **task_params)
+            task = get_single_minihack_task(
+                f"{task_prefix}_{action_space_id}",
+                action_space_id, 
+                env_name,
+                num_timesteps,
+                **task_params
+            )
             # eval_task = get_single_minihack_task(f"{task_prefix}_{action_space_id}_eval", action_space_id, pairs[1],
             #                                      0, eval_mode=True, **task_params)
 
@@ -133,6 +140,68 @@ def create_minihack_loader(
             continual_testing_freq=continual_testing_freq,
             cycle_count=cycle_count,
         )
+    return loader
+
+def create_skillhack_loader(
+    task_prefix,
+    skill_names,
+    task_names,
+    skill_num_timesteps=10e6,
+    task_num_timesteps=50e6,
+    skill_params=None,
+    task_params=None,
+    continual_testing_freq=1000,
+    cycle_count=1,
+):
+    skill_params = skill_params if skill_params is not None else {}
+    task_params = task_params if task_params is not None else {}
+
+    flags = {
+        "save_tty": False,
+        "obs_keys": "glyphs,chars,colors,specials,blstats,message",
+        "penalty_step": -0.001,
+        "penalty_time": 0.0,
+        "fn_penalty_step": "constant",
+        "max_num_steps": 1000,
+        "character": None,
+        "state_counter": "none",
+        "seedspath": "",
+    }
+
+    def loader():
+        skills = []
+        for action_space_id, env_name in enumerate(skill_names):
+            skill = get_single_skillhack_task(
+                f"{task_prefix}_{action_space_id}", 
+                action_space_id,
+                env_name,
+                flags,
+                skill_num_timesteps, 
+                **skill_params,
+            )
+
+            skills += [skill]
+
+        tasks = []
+        for action_space_id, env_name in enumerate(task_names):
+            task = get_single_skillhack_task(
+                f"{task_prefix}_{action_space_id}", 
+                action_space_id,
+                env_name,
+                flags,
+                task_num_timesteps, 
+                **task_params,
+            )
+
+            tasks += [task]
+
+        return ExperimentSkills(
+            skills,        
+            tasks,
+            continual_testing_freq=continual_testing_freq,
+            cycle_count=cycle_count,
+        )
+    
     return loader
 
 
@@ -417,6 +486,47 @@ def get_available_experiments():
             continual_testing_freq=1e4,
             cycle_count=1,
             config='env_config.json',
+        ),
+
+        # ==================================
+        # ============ SkillHack ===========
+        # ==================================
+        "skillhack_small": create_skillhack_loader(
+            "skillhack_small",
+            [   
+                #"mini_skill_apply_frost_horn",
+                "mini_skill_eat"
+                "mini_skill_fight"
+                "mini_skill_nav_blind",
+                #"mini_skill_nav_lava",
+                #"mini_skill_nav_lava_to_amulet",
+                "mini_skill_nav_water",
+                "mini_skill_pick_up",   
+                "mini_skill_put_on",
+                "mini_skill_take_off",
+                #"mini_skill_throw",
+                #"mini_skill_unlock",
+                "mini_skill_wear",
+                "mini_skill_wield",
+                #"mini_skill_zap_cold",
+                #"mini_skill_zap_death",
+            ],
+            [
+                "mini_simple_seq", # : Battle
+                # "mini_simple_union", # : Over or Around
+                "mini_simple_intersection", # : Prepare for Battle
+                # "mini_simple_random", # : Target Practice
+                # "mini_lc_freeze", #: Frozen Lava Cross
+                "mini_medusa", # : Medusa
+                # "mini_mimic", # : Identify Mimic
+                "mini_seamonsters", # : Sea Monsters
+            ],
+            # skill_num_timesteps=1e7,
+            skill_num_timesteps=1e6,
+            #task_num_timesteps=50e6,
+            task_num_timesteps=1e6,
+            continual_testing_freq=1e4,
+            cycle_count=1,
         ),
 
         # ===============================
