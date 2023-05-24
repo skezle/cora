@@ -1,9 +1,9 @@
 [
     {
         "policy": "impala",
-        "experiment": "minihack_small",
+        "experiment": "minigrid_single_lavacrossing",
         "epsilon": 0.01,
-        "num_actors": 64,
+        "num_actors": 24,
         "batch_size": 32,
         "unroll_length": 20,
         "entropy_cost": 0.01,

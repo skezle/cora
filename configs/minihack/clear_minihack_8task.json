@@ -1,7 +1,7 @@
 [
     {
         "policy": "clear",
-        "experiment": "minihack_small",
+        "experiment": "minihack_nav_1_cycles",
         "epsilon": 0.01,
         "num_actors": 12,
         "batch_size": 10,

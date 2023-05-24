@@ -10,6 +10,6 @@
         "learning_rate": 4e-4,
         "num_learner_threads": 2,
         "large_file_path": "/tmp",
-        "replay_buffer_frames": 1e6
+        "replay_buffer_frames": 2e6
     }
 ]

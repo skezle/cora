@@ -7,7 +7,7 @@ from continual_rl.experiments.experiment_skillhack import ExperimentSkills
 from continual_rl.experiments.tasks.make_procgen_task import get_single_procgen_task
 from continual_rl.experiments.tasks.make_chores_task import create_chores_tasks_from_sequence
 from continual_rl.experiments.tasks.make_minihack_task import get_single_minihack_task
-from continual_rl.experiments.tasks.make_skillhack_task import get_single_skillhack_task
+#from continual_rl.experiments.tasks.make_skillhack_task import get_single_skillhack_task
 from continual_rl.experiments.tasks.minigrid_task import get_single_minigrid_task
 from continual_rl.available_policies import LazyDict
 
@@ -422,7 +422,7 @@ def get_available_experiments():
                 # "River-MonsterLava-v0"
             ],
             num_timesteps=1e6,
-            continual_testing_freq=2e4,
+            continual_testing_freq=1e4,
             cycle_count=1,
         ),
 
@@ -466,8 +466,8 @@ def get_available_experiments():
             "minigrid_1_cycles",
             [
                 ('MiniGrid-DoorKey-9x9-v0', 'MiniGrid-DoorKey-9x9-v0'),
-                ('MiniGrid-SimpleCrossingS9N1-v0', 'MiniGrid-SimpleCrossingS9N1-v0'),
                 ('MiniGrid-LavaCrossingS9N1-v0', 'MiniGrid-LavaCrossingS9N1-v0'),
+                ('MiniGrid-SimpleCrossingS9N1-v0', 'MiniGrid-SimpleCrossingS9N1-v0'),
             ],
             num_timesteps=7.5e5,
             continual_testing_freq=1e4,
@@ -475,12 +475,30 @@ def get_available_experiments():
             config='env_config.json',
         ),
 
-        "minigrid_single": create_minigrid_loader(
+        "minigrid_single_doorkey": create_minigrid_loader(
             "minihack_single",
             [
                 ('MiniGrid-DoorKey-9x9-v0', 'MiniGrid-DoorKey-9x9-v0'),
-                #('MiniGrid-SimpleCrossingS9N1-v0', 'MiniGrid-SimpleCrossingS9N1-v0'),
-                #('MiniGrid-LavaCrossingS9N1-v0', 'MiniGrid-LavaCrossingS9N1-v0'),
+            ],
+            num_timesteps=7.5e5,
+            continual_testing_freq=1e4,
+            cycle_count=1,
+            config='env_config.json',
+        ),
+        "minigrid_single_lavacrossing": create_minigrid_loader(
+            "minihack_single",
+            [
+                ('MiniGrid-LavaCrossingS9N1-v0', 'MiniGrid-LavaCrossingS9N1-v0'),
+            ],
+            num_timesteps=7.5e5,
+            continual_testing_freq=1e4,
+            cycle_count=1,
+            config='env_config.json',
+        ),
+        "minigrid_single_simplecrossing": create_minigrid_loader(
+            "minihack_single",
+            [
+                ('MiniGrid-SimpleCrossingS9N1-v0', 'MiniGrid-SimpleCrossingS9N1-v0'),
             ],
             num_timesteps=7.5e5,
             continual_testing_freq=1e4,
