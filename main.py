@@ -23,8 +23,11 @@ if __name__ == "__main__":
         assert "cannot find context" in str(e)
         multiprocessing.set_start_method("spawn")
 
+    # sys.argv:  ['main.py', '--wandb_group', 'clear_single', 
+    # '--wandb_proj_name', 'minigrid_baselines', '--tag=', 'mg_clear_dk',
+    #  '--config-file', 'configs/minigrid/clear_minigrid_doorkey.json', '--resume-id', '2']
     #experiment, policy, resume_id = ArgparseManager.parse(sys.argv[1:])
-    experiment, policy, resume_id = ArgparseManager.parse(sys.argv[4:])
+    experiment, policy, resume_id = ArgparseManager.parse(sys.argv[7:])
 
     config_wandb = {
         "mode": "online",
